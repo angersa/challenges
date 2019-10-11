@@ -32,21 +32,22 @@ def get_movies_by_director(data=MOVIE_DATA):
 
 def get_average_scores(directors):
     '''Filter directors with < MIN_MOVIES and calculate averge score'''
-    cnt = Counter()
-    less_than_min = []
+    director_scores = defaultdict(list)
     for director, movies in directors.items():
-        cnt[director] += len(movies)
-        if cnt[director] < MIN_MOVIES:
-            less_than_min.append(director)
-    for director in less_than_min:
-        del directors[director]
-
-    return directors
+        if len(movies) >= MIN_MOVIES:
+            director_scores[(director, _calc_mean(movies))] = movies
+    return director_scores
+   
+   
 
 
 def _calc_mean(movies):
     '''Helper method to calculate mean of list of Movie namedtuples'''
-    pass
+    total = 0
+    for m in movies:
+        total += m.score
+    return round(total/len(movies), 1)
+
 
 
 def print_results(directors):
@@ -64,6 +65,8 @@ def main():
     directors = get_movies_by_director()
     directors = get_average_scores(directors)
     print_results(directors)
+    for d, m in directors.items():
+        print(d, m)
 
 
 
