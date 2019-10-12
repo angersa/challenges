@@ -37,8 +37,6 @@ def get_average_scores(directors):
         if len(movies) >= MIN_MOVIES:
             director_scores[(director, _calc_mean(movies))] = movies
     return director_scores
-   
-   
 
 
 def _calc_mean(movies):
@@ -47,7 +45,6 @@ def _calc_mean(movies):
     for m in movies:
         total += m.score
     return round(total/len(movies), 1)
-
 
 
 def print_results(directors):
@@ -69,16 +66,12 @@ def print_results(directors):
         print()
 
 
-
 def main():
     '''This is a template, feel free to structure your code differently.
     We wrote some tests based on our solution: test_directors.py'''
     directors = get_movies_by_director()
     directors = get_average_scores(directors)
     print_results(directors)
-
-
-
 
 
 if __name__ == '__main__':
