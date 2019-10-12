@@ -1,5 +1,5 @@
 import csv
-from collections import defaultdict, namedtuple, Counter
+from collections import defaultdict, namedtuple
 
 MOVIE_DATA = '/Users/aa/GitHub/challenges/13/movie_metadata.csv'
 NUM_TOP_DIRECTORS = 20
@@ -57,6 +57,17 @@ def print_results(directors):
     fmt_director_entry = '{counter}. {director:<52} {avg}'
     fmt_movie_entry = '{year}] {title:<50} {score}'
     sep_line = '-' * 60
+    rank = 0
+
+    best_directors = sorted(directors.items(), key=lambda x: float(x[0][1]), reverse=True)
+    for director, movies in best_directors[:20]:
+        rank += 1
+        print(fmt_director_entry.format(counter=rank, director=director[0], avg=director[1]))
+        print(sep_line)
+        for m in sorted(movies, key=lambda m: m.score, reverse=True):
+            print(fmt_movie_entry.format(year=m.year, title=m.title, score=m.score))
+        print()
+
 
 
 def main():
@@ -65,8 +76,7 @@ def main():
     directors = get_movies_by_director()
     directors = get_average_scores(directors)
     print_results(directors)
-    for d, m in directors.items():
-        print(d, m)
+
 
 
 
